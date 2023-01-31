@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>SI-SDM</title>
+  <meta charset="UTF-8">
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <style>
+    .section-table {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      box-sizing: border-box;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    }
+
+    .container-berhasil {
+      width: 750px;
+      height: 250px;
+      align-items: center;
+      border-radius: 10px;
+      border-style: solid;
+      border-width: thin;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .description {
+      margin-top: 50px;
+      margin-left: 30px;
+      margin-right: 30px;
+      width: auto;
+      display: flex;
+    }
+
+    .button-description {
+      margin-left: 30px;
+      margin-top: 55px;
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+    }
+
+
+  </style>
+</head>
+<body>
+
+<nav th:replace="fragments/fragment :: beranda"></nav>
+<section class="section-table">
+  <div class="container-berhasil border-danger">
+    <div class="description">
+      <h4>karyawan dengan nama <span class="text-danger" th:text="${namaKaryawan}"></span> berhasil dihapus.</h4>
+    </div>
+    <div class="button-description">
+      <a class="btn btn-danger w-25" href="/karyawan/">Kembali</a>
+      <a class="btn btn-outline-danger w-25" href="/">Home</a>
+    </div>
+  </div>
+</section>
+<!--<div th:insert="footer.html"></div>-->
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+	<title>SI-SDM</title>
+	<meta charset="UTF-8">
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+	<style>
+        .header {
+            height: 150px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .back {
+            width: 70px;
+            height: 70px;
+        }
+
+        .section-content {
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 850px;
+            border-radius: 10px;
+            border-style: solid;
+            border-width: thin;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            /*background-color: blue;*/
+
+        }
+
+
+        .container-section {
+            height: 110px;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .container-top {
+            height: 60px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+
+
+        .container-content {
+            width: auto;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 80px;
+        }
+
+        .container-table {
+            width: 700px;
+            height: auto;
+            border-radius: 10px;
+            border-style: solid;
+            border-width: thin;
+        }
+
+        .header-container-table {
+            height: 60px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+
+        .content-container-table {
+            display: flex;
+            justify-content: center;
+        }
+
+        .table {
+            margin-top: 20px;
+            width: 650px;
+            height: auto;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+	</style>
+</head>
+<body>
+
+<nav th:replace="fragments/fragment :: beranda"></nav>
+<section class="header">
+	<div>
+		<a class="back fa fa-angle-left btn w-100" href="/karyawan/"></a>
+	</div>
+	<div class="container-daftar">
+		<h1 class="text-danger ml-2">Detail Karyawan</h1>
+	</div>
+	<div>
+		<a class="btn btn-warning" th:href="@{/karyawan/} + ${karyawan.idKaryawan} + @{/ubah}">Edit</a>
+		<form th:action="@{/karyawan/${karyawan.idKaryawan}/hapus}" th:object="${karyawan}" method="POST">
+			<button class="btn btn-danger" th:value="${karyawan.idKaryawan}" type="submit" name="idKaryawanDihapus">Hapus</button>
+		</form>
+	</div>
+</section>
+<section class="section-content">
+	<div class="container border-danger">
+		<div class="container-section">
+			<div class="container-top">
+				<div class="content">
+					<h6 class="text-danger">Nama</h6>
+					<h6 th:text="${karyawan.namaDepan} + ' ' + ${karyawan.namaBelakang} "></h6>
+				</div>
+				<div class="mr-2">
+					<h6 class="text-danger">Jenis Kelamin</h6>
+					<h6 th:text="Laki-laki" th:if="${karyawan.jenisKelamin == '1'}"></h6>
+					<h6 th:text="Perempuan" th:unless="${karyawan.jenisKelamin == '1'}"></h6>
+				</div>
+			</div>
+			<div class="container-top mt-3">
+				<div class="content ml-4">
+					<h6 class="text-danger">Tanggal Lahir</h6>
+					<h6 th:text="${#temporals.format(karyawan.tanggalLahir, 'yyyy-MM-dd')}"></h6>
+				</div>
+				<div class="">
+					<h6 class="text-danger">Email</h6>
+					<h6 th:text="${karyawan.email}"></h6>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-content mt-5">
+			<div class="container-table border border-danger">
+				<div class="header-container-table bg-danger">
+					<h5 class="table-title text-white ml-4 mt-2">Daftar Sertifikasi</h5>
+				</div>
+				<div class="content-container-table">
+					<table class="table">
+						<thead>
+						<tr>
+							<th>No</th>
+							<th>Nama Sertifikasi</th>
+							<th>No Sertifikasi</th>
+							<th>Tanggal Pengambilan</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="sertifikasikaryawan, status : ${listSertifikasi}">
+							<td th:text="${status.count}"></td>
+							<td th:text="${sertifikasikaryawan.sertifikasi.nama}"></td>
+							<td th:text="${sertifikasikaryawan.noSertifikasi}"></td>
+							<td th:text="${sertifikasikaryawan.tanggalPengambilan}"></td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div th:insert="footer.html"></div>
+</body>
+</html>

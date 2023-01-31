@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+	<title>SI-SDM</title>
+	<meta charset="UTF-8">
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+	<style>
+        .header {
+            height: 150px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .back {
+            width: 70px;
+            height: 70px;
+        }
+
+        .section-content {
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 850px;
+            border-radius: 10px;
+            border-style: solid;
+            border-width: thin;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+        }
+        .container-presensi-content{
+            width: 700px;
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+        }
+
+
+        .container-content {
+            width: 850px;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 80px;
+        }
+
+        .container-table {
+            width: 700px;
+            height: auto;
+            border-radius: 10px;
+            border-style: solid;
+            border-width: thin;
+        }
+
+        .header-container-table {
+            height: 60px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .content-container-table {
+            display: flex;
+            justify-content: center;
+        }
+        .table {
+            margin-top: 20px;
+            width: 650px;
+            height: auto;
+        }
+        th {
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+		.filter{
+			margin-left: 100px;
+		}
+	</style>
+</head>
+<body>
+
+<nav th:replace="fragments/fragment :: beranda"></nav>
+<section class="header">
+	<div>
+		<a class="back fa fa-angle-left btn" href="/karyawan/"></a>
+	</div>
+	<div class="container-daftar">
+		<h1 class="filter text-danger ">Filter Tugas</h1>
+		<h5 class="text-danger">Berdasarkan Nama Karyawan dan Status Tugas</h5>
+	</div>
+	<div>
+<!--		<a  class="btn btn-warning" th:href="@{/karyawan/} + ${pres.idPresensi} + @{/ubah}">Edit</a>-->
+	</div>
+</section>
+<section class="section-content">
+	<div class="container border-danger">
+		<div class="container-content mt-5">
+			<form th:action="@{/filter-tugas/}" method="GET">
+				<p class="required">Nama Karyawan : </p>
+				<select name="id-karyawan" class="form-control">
+					<div th:each="karyawanEx, iterationStatus2 : ${listKaryawan}">
+						<option th:value="${karyawanEx.idKaryawan}" th:text="${karyawanEx.namaDepan} + ' ' + ${karyawanEx.namaBelakang}"></option>
+					</div>
+				</select>
+				<p class="required">Status : </p>
+				<select name="status" class="form-control" style="width: 250px">
+					<option value="0">Dimulai</option>
+					<option value="1">Dikerjakan</option>
+					<option value="2">Selesai</option>
+				</select>
+				<button class="btn btn-danger btn-block" type="submit" name="filterKaryawan" style="margin-top: 30px">Cari</button>
+			</form>
+
+		</div>
+
+		<div class="container-content mt-5">
+			<div class="container-table border border-danger">
+				<div class="header-container-table bg-danger">
+					<h5 class="table-title text-white ml-4 mt-2">Daftar Tugas</h5>
+				</div>
+				<div class="content-container-table">
+					<table class="table">
+						<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nama Tugas</th>
+							<th>Stroy Point</th>
+							<th>Deskripsi</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="tugas, status : ${listTugas}">
+							<td th:text="${tugas.idTugas}"></td>
+							<td th:text="${tugas.judulTugas}"></td>
+							<td th:text="${tugas.point}"></td>
+							<td th:text="${tugas.deskripsiTugas}"></td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<div th:insert="footer.html"></div>
+</body>
+</html>

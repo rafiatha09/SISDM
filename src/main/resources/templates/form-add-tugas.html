@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Tugas 1</title>
+	<title>SI-SDM</title>
+	<meta charset="UTF-8">
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<style>
+        .section-table {
+            display: flex;
+            justify-content: center;
+        }
+		.container-tambah-tugas{
+			width: 720px;
+		}
+        .tambah-karyawan-title {
+            display: block;
+            height: 140px;
+            position: relative;
+        }
+
+        .title {
+            top: 90px;
+            position: absolute;
+        }
+
+        .nama-deskripsi {
+            display: flex;
+            margin-top: 30px;
+			width: 100%;
+        }
+
+        .nama {
+            margin-right: 245px;
+        }
+
+		.input-status{
+			display: flex;
+			gap: 20px;
+		}
+
+		.form-control{
+			width: 350px;
+		}
+
+        .container-option {
+            display: flex;
+            flex-direction: row;
+            margin-top: 120px;
+            gap: 10px;
+        }
+	</style>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: beranda"></nav>
+<section class="section-table">
+	<div class="container-tambah-tugas">
+		<div class="tambah-karyawan-title">
+			<h1 class="title">Tambah Tugas</h1>
+		</div>
+
+		<form method="POST" th:object="${tugas}" th:action="@{/tambah-tugas}">
+			<div class="container-section-nama-karyawan">
+				<div class="nama-deskripsi">
+					<h3 class="nama">Nama Tugas</h3>
+				</div>
+				<div class="nama-tugas-input">
+					<input required class="form-control" type="text" th:field="*{judulTugas}" placeholder="Nama Tugas"/>
+				</div>
+			</div>
+			<div class="container-email-tgl">
+				<div class="nama-deskripsi">
+					<h3 class="nama">Deskripsi</h3>
+				</div>
+				<div class="input-deskripsi">
+					<textarea rows="7" cols="95" required  type="text" th:field="*{deskripsiTugas}" placeholder="Deskripsi"/>
+				</div>
+			</div>
+
+			<div class="container-email-tgl">
+				<div class="nama-deskripsi">
+					<h3 class="nama">Story Point</h3>
+					<h3>Status</h3>
+				</div>
+				<div class="input-status">
+					<input required class="form-control" type="number" th:field="*{point}" placeholder="Point"/>
+					<select class="form-control" name="form-select" aria-label="Default select example" th:field="*{status}">-->
+						<option value="0">Akan dimulai</option>
+						<option value="1">Sedang dikerjakan</option>
+						<option value="2">Telah selesai</option>
+					</select>
+				</div>
+			</div>
+			<div class="container-option">
+				<button class="btn btn-danger w-50" type="submit">Simpan</button>
+				<button class="btn btn-secondary w-50" type="denied" name="denied">Batal</button>
+			</div>
+		</form>
+	</div>
+</section>
+
+<div th:insert="footer.html"></div>
+</body>
+</html>

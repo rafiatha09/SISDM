@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Tugas 1</title>
+	<title>SI-SDM</title>
+	<meta charset="UTF-8">
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<style>
+        .section-table {
+            display: flex;
+            justify-content: center;
+        }
+
+        .tambah-karyawan-title {
+            display: block;
+            height: 180px;
+            position: relative;
+        }
+
+        .title {
+            top: 90px;
+            position: absolute;
+        }
+
+        .container-tambah-karyawan {
+            width: 750px;
+            height: auto;
+        }
+
+        .input-nama-karyawan {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .form-control {
+            width: 350px;
+            margin-right: 50px;
+        }
+
+        .email-tgl {
+            display: flex;
+            margin-top: 30px;
+        }
+
+        .email {
+            margin-right: 305px;
+        }
+
+        .input-nama-karyawan {
+            display: flex;
+        }
+
+        .input-email-tgl {
+            display: flex;
+        }
+
+        .container-jenis-kelamin {
+            margin-top: 30px;
+        }
+
+        .container-daftar-sertifikasi {
+            margin-top: 30px;
+        }
+
+        .daftar-sertifikasi-label {
+            display: block;
+        }
+
+        .container-input-daftar-sertifikasi {
+            display: flex;
+        }
+
+        .button-tambah-sertifikasi {
+            margin-top: 15px;
+        }
+
+        .container-option {
+            display: flex;
+            flex-direction: row;
+            margin-top: 50px;
+            gap: 10px;
+        }
+	</style>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: beranda"></nav>
+<section class="section-table">
+	<div class="container-tambah-karyawan">
+		<div class="tambah-karyawan-title">
+			<h1 class="title">Ubah Data Karyawan</h1>
+		</div>
+		<form method="POST" th:object="${karyawan}" th:action="@{/karyawan/} + ${karyawan.idKaryawan} + @{/ubah}">
+			<input type="hidden" th:field="*{idKaryawan}"/>
+			<div class="container-section-nama-karyawan">
+				<div class="nama-karyawan">
+					<h3>Nama Karyawan</h3>
+				</div>
+				<div class="input-nama-karyawan">
+					<input required class="form-control" type="text" th:field="*{namaDepan}" placeholder="Nama Depan"/>
+					<input required class="form-control" type="text" th:field="*{namaBelakang}"
+						   placeholder="Nama Belakang"/>
+				</div>
+			</div>
+			<div class="container-email-tgl">
+				<div class="email-tgl">
+					<h3 class="email">Email</h3>
+					<h3>Tanggal Lahir</h3>
+				</div>
+				<div class="input-email-tgl">
+					<input required class="form-control" type="text" th:field="*{email}" placeholder="Email"/>
+					<input required class="form-control" type="date" th:field="*{tanggalLahir}"
+						   placeholder="Tanggal Lahir"/>
+				</div>
+			</div>
+			<div class="container-jenis-kelamin">
+				<div class="jenis-kelamin">
+					<h3>Jenis Kelamin</h3>
+				</div>
+				<div class="form-check custom-radio">
+					<input class="form-check-input " type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+						   value="1" th:value="*{jenisKelamin}">
+					<label class="form-check-label" for="flexRadioDefault1">
+						Laki-laki
+					</label>
+				</div>
+				<div class="form-check custom-radio">
+					<input class="form-check-input " type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+						   value="2" th:value="*{jenisKelamin}">
+					<label class="form-check-label" for="flexRadioDefault2">
+						Perempuan
+					</label>
+				</div>
+			</div>
+			<div class="container-daftar-sertifikasi">
+				<h3 class="daftar-sertifikasi-label">Daftar Sertifikasi</h3>
+
+				<div class="container-input-daftar-sertifikasi mt-2" th:each="sertifikasikaryawan, status2 : *{listSertifikasiKaryawan}">
+					<input type="hidden" th:field="*{listSertifikasiKaryawan[__${status2.index}__].noSertifikasi}">
+					<select class="form-control" name="form-select" x-placement="Nama Sertifikasi" aria-label="Default select example"
+							th:field="*{listSertifikasiKaryawan[__${status2.index}__].sertifikasi}">
+
+						<div th:each="sertifikasi, status3: ${listofsertifikasiexist}">
+							<option th:value="${sertifikasi.idSertifikasi}" th:text="${sertifikasi.nama}"></option>
+						</div>
+					</select>
+					<input required class="form-control" type="date" th:field="*{listSertifikasiKaryawan[__${status2.index}__].tanggalPengambilan}"/>
+					<button th:value="${status2.index}" class="btn btn-danger" type="submit" name="hapusRowSerfikasiUpdate">Hapus</button>
+				</div>
+			</div>
+			<div class="button-tambah-sertifikasi">
+				<button class="btn btn-success" type="submit" name="addRowSertifikasiUpdate">Tambah Sertifikasi</button>
+			</div>
+			<div class="container-option">
+				<button class="btn btn-danger w-50" type="submit" name="updateForm">Simpan</button>
+				<button class="btn btn-secondary w-50" type="denied" name="denied">Batal</button>
+			</div>
+		</form>
+	</div>
+</section>
+
+<div th:insert="footer.html"></div>
+</body>
+</html>

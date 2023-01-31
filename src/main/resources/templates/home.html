@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+	<title>Tugas 1</title>
+	<title>SI-SDM</title>
+	<meta charset="UTF-8">
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<style>
+        .container {
+            width: auto;
+            height: 480px;
+            position: relative;
+        }
+
+        .welcome {
+            width: 600px;
+            height: 250px;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            /*text-align: center;*/
+            justify-content: center;
+        }
+
+        .option {
+            width: auto;
+            height: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fiture {
+            width: auto;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .fiture-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+
+	</style>
+
+<body>
+<nav th:replace="fragments/fragment :: beranda"></nav>
+
+<div class="container">
+	<div class="welcome bg-danger text-white">
+		<h1>Welcome to SI-SDM</h1>
+	</div>
+</div>
+<div class="option">
+	<div class="option-container">
+		<h1 class="text-danger">List of Features:</h1>
+	</div>
+</div>
+<div class="fiture">
+	<div class="fiture-container">
+		<div class="fitur-option">
+			<a class="btn btn-danger btn-lg" th:href="@{/karyawan/}">Karyawan</a>
+		</div>
+		<div class="fitur-option">
+			<a class="btn btn-danger btn-lg" th:href="@{/presensi/}">Presensi</a>
+		</div>
+		<div class="fitur-option">
+			<a class="btn btn-danger btn-lg" th:href="@{/tambah-tugas/}">Tambahan Tugas</a>
+		</div>
+		<div class="dropdown">
+			<button type="button" class="btn btn-danger dropdown-toggle btn-lg" data-toggle="dropdown">
+				Filter
+			</button>
+			<ul class="dropdown-menu">
+				<li>
+					<a class="dropdown-item" href="#">Cari tugas berdasarkan karyawan yang memiliki status tertentu</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#">Cari karyawan berdasarkan sertifikat</a>
+				</li>
+
+			</ul>
+		</div>
+
+	</div>
+</div>
+<div th:insert="footer.html"></div>
+</body>
+</html>
